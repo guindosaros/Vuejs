@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello, world!</h1>
+        <div id="app">
+            <div class="row">
+                <div class="col-md-4">${ message }
+                    <p>mon nom : ${nom}</p>
+                    <span v-bind:title="messages">
+                        Hover your mouse over me for a few seconds
+                        to see my dynamically bound title!
+                    </span>
+                    <br>
+                    <span v-if="seen">Now you see me</span>
+                    <span style="display: none">text none</span>
+                </div>
+                <div class="col-md-4">
+                    <ol>
+                        <li v-for="todo in todos">
+                        ${ todo.text }
+                        </li>
+                    </ol>
+                    <button v-on:click="reverseMessage">Reverse Message</button>
+                    <button class="btn btn-primary" v-on:click="hello">click moi </button>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-primary" role="alert">
+                        ${ alert_message }
+                    </div>
+                    <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Example textarea</label>
+                            <textarea  v-model='alert_message'  class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ol>
+                        <!-- Create an instance of the todo-item component -->
+                        <todo-item v-bind:component_message='component_message'></todo-item>
+                        <todo-item v-bind:component_message='component_message'></todo-item>
+                        <todo-item v-bind:component_message='component_message'></todo-item>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <div class="row">
+                                <div class="col-md-4"> 
+                                    <div class="card"> 
+                                    <div class="card-body">
+                                        <p>Nom: Guindo</p>
+                                        <p>Prenoms: Guindo</p>
+                                        <p>email: Guindo</p>
+                                        <p>Contact: Guindo</p>
+
+                                    </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVpht¬hzWj9WO1clHTMGa3JDZwrnQq4s¬¬F86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+
+    <!-- VueJS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="vue.js"></script> -->
+    <script>
+        Vue.component('todo-item', {
+            props: ['component_message'],
+            delimiters:["${","}"],
+            template: '<li>${ component_message }</li>',
+            })
+
+        Vue.component('card-item', {
+        props: ['component_message'],
+        delimiters:["${","}"],
+        template: '<div class="col-md-4"> <div class="card"> <div class="card-body"> This is some text within a card body.</div> </div></div>',
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                titre : 'le titre qui se trouve dans le paragraphe',
+                nom:'stephane',
+                messages: 'You loaded this page on ' + new Date().toLocaleString(),
+                seen:false,
+                todos: [
+                    { text: 'Learn JavaScript' },
+                    { text: 'Learn Vue' },
+                    { text: 'Build something awesome' }
+                    ],
+                alert_message:'message textarea ici!!!',
+                component_message:'le message du component'
+            },
+            delimiters:["${","}"],
+            mounted(){
+                //this.hello()
+            },
+            methods: {
+                reverseMessage: function () {
+                this.message = this.message.split('').reverse().join('')
+                },
+                hello:function(){
+                    console.log('hello world\r\n')
+                }
+            },
+            
+            })
+            
+    </script>
+</body>
+</html>
