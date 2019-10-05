@@ -14,6 +14,12 @@
     <div class="container">
         <h1>Hello, world!</h1>
         <div id="app">
+        <div class="loader text-center" v-if="loader">
+            <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="container"  v-if="content">
             <div class="row">
                 <div class="col-md-4">${ message }
                     <p>mon nom : ${nom}</p>
@@ -56,21 +62,14 @@
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <div class="row">
-                                <div class="col-md-4"> 
-                                    <div class="card"> 
-                                    <div class="card-body">
-                                        <p>Nom: Guindo</p>
-                                        <p>Prenoms: Guindo</p>
-                                        <p>email: Guindo</p>
-                                        <p>Contact: Guindo</p>
-
-                                    </div> 
-                                    </div>
-                                </div>
+                                <card-item></card-item>
+                                <card-item></card-item>
+                                <card-item></card-item>
                             </div>
                         </div>
                     </div>
             </div>
+        </div>
         </div>
     </div>
     <!-- Optional JavaScript -->
@@ -81,6 +80,7 @@
 
     <!-- VueJS -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <script src="vue.js"></script> -->
     <script>
         Vue.component('todo-item', {
@@ -92,7 +92,19 @@
         Vue.component('card-item', {
         props: ['component_message'],
         delimiters:["${","}"],
-        template: '<div class="col-md-4"> <div class="card"> <div class="card-body"> This is some text within a card body.</div> </div></div>',
+        template: `
+        <div class="col-md-4"> 
+            <div class="card"> 
+            <div class="card-body">
+                <p>Nom: Guindo </p>
+                <p>Prenoms: Guindo </p>
+                <p>email: mohamed@gmail.com </p>
+                <p>Contact: Guindo</p>
+                <p>City: Guindo</p>
+            </div> 
+            </div>
+        </div>
+        `,
         })
 
         var app = new Vue({
@@ -109,11 +121,14 @@
                     { text: 'Build something awesome' }
                     ],
                 alert_message:'message textarea ici!!!',
-                component_message:'le message du component'
+                component_message:'le message du component',
+                loader:true,
+                content:false,
             },
             delimiters:["${","}"],
             mounted(){
                 //this.hello()
+                this.getUser()
             },
             methods: {
                 reverseMessage: function () {
@@ -121,6 +136,18 @@
                 },
                 hello:function(){
                     console.log('hello world\r\n')
+                },
+                getUser: function(){
+                    axios.get('https://jsonplaceholder.typicode.com/users')
+                    .then(response => {
+                        console.log(response.data)
+                        this.loader = false;
+                        this.content = true;
+
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
                 }
             },
             
