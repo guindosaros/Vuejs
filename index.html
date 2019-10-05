@@ -63,7 +63,10 @@
                         <div class="alert alert-info" role="alert">
                             <div class="row">
                                 <card-item v-for="user in users"
-                                v-bind:item="user">
+                                v-bind:item="user"
+                                v-bind:key="user.id"
+                                >
+                                    
                                 </card-item>
                                 
                             </div>
@@ -95,13 +98,13 @@
         delimiters:["${","}"],
         template: `
         <div class="col-md-4"> 
-            <div class="card"> 
+            <div class="card"  style="margin-top:10px"> 
             <div class="card-body">
-                <p>Nom: Guindo </p>
-                <p>Prenoms: Guindo </p>
-                <p>email: mohamed@gmail.com </p>
-                <p>Contact: Guindo</p>
-                <p>City: Guindo</p>
+                <p>Nom: `+"${item.name}"+`</p>
+                <p>Prenoms: `+"${item.username}"+` </p>
+                <p>email: `+"${item.email}"+` </p>
+                <p>Contact: `+"${item.phone}"+`</p>
+                <p>City: `+"${item.city}"+`</p>
             </div> 
             </div>
         </div>
